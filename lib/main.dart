@@ -47,7 +47,8 @@ class MyApp extends StatelessWidget {
         // primarySwatch: getMaterialColor(const Color(0xFF141414)),
         // useMaterial3: true,
       ),
-      home: accounts.isNotEmpty ? const MainPage() : const LoginPage(),
+      //   home: accounts.isNotEmpty ? const MainPage() : const LoginPage(),
+      home: accounts.isNotEmpty ? const HomePage() : const LoginPage(),
     );
   }
 }
