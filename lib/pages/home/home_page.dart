@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:matic_wallet/data/repository/account_repository.dart';
 import 'package:matic_wallet/pages/home/components/send_token.dart';
 import 'package:matic_wallet/pages/login_page.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,26 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  WebViewController webcontroller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setBackgroundColor(const Color(0x00000000))
-    ..setNavigationDelegate(
-      NavigationDelegate(
-        onProgress: (int progress) {},
-        onPageStarted: (String url) {},
-        onPageFinished: (String url) {},
-        onWebResourceError: (WebResourceError error) {},
-        onNavigationRequest: (NavigationRequest request) {
-          if (request.url.startsWith(
-              'https://mumbai.polygonscan.com/address/0xb088e86eac97445f6da4caa909cbc984eb860781/')) {
-            return NavigationDecision.prevent;
-          }
-          return NavigationDecision.navigate;
-        },
-      ),
-    )
-    ..loadRequest(Uri.parse(
-        'https://mumbai.polygonscan.com/address/0xb088e86eac97445f6da4caa909cbc984eb860781'));
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(

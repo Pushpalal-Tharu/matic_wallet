@@ -150,6 +150,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: b068ffc46f82a55844acfa4fdbb61fad72fa2aef0905548419d97f0f95c456da
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.17"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -195,6 +203,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.19.0"
   js:
     dependency: transitive
     description:
@@ -243,6 +259,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  local_auth:
+    dependency: "direct main"
+    description:
+      name: local_auth
+      sha256: "280421b416b32de31405b0a25c3bd42dfcef2538dfbb20c03019e02a5ed55ed0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
+  local_auth_android:
+    dependency: transitive
+    description:
+      name: local_auth_android
+      sha256: "3bcd732dda7c75fcb7ddaef12e131230f53dcc8c00790d0d6efb3aa0fbbeda57"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.37"
+  local_auth_darwin:
+    dependency: transitive
+    description:
+      name: local_auth_darwin
+      sha256: "33381a15b0de2279523eca694089393bb146baebdce72a404555d03174ebc1e9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.2"
+  local_auth_platform_interface:
+    dependency: transitive
+    description:
+      name: local_auth_platform_interface
+      sha256: "1b842ff177a7068442eae093b64abe3592f816afd2a533c0ebcdbe40f9d2075a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.10"
+  local_auth_windows:
+    dependency: transitive
+    description:
+      name: local_auth_windows
+      sha256: "505ba3367ca781efb1c50d3132e44a2446bccc4163427bc203b9b4d8994d97ea"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.10"
   matcher:
     dependency: transitive
     description:
@@ -488,38 +544,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.7.2"
-  webview_flutter:
-    dependency: "direct main"
-    description:
-      name: webview_flutter
-      sha256: "25e1b6e839e8cbfbd708abc6f85ed09d1727e24e08e08c6b8590d7c65c9a8932"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.7.0"
-  webview_flutter_android:
-    dependency: transitive
-    description:
-      name: webview_flutter_android
-      sha256: "3e5f4e9d818086b0d01a66fb1ff9cc72ab0cc58c71980e3d3661c5685ea0efb0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.15.0"
-  webview_flutter_platform_interface:
-    dependency: transitive
-    description:
-      name: webview_flutter_platform_interface
-      sha256: d937581d6e558908d7ae3dc1989c4f87b786891ab47bb9df7de548a151779d8d
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.10.0"
-  webview_flutter_wkwebview:
-    dependency: transitive
-    description:
-      name: webview_flutter_wkwebview
-      sha256: "9bf168bccdf179ce90450b5f37e36fe263f591c9338828d6bf09b6f8d0f57f86"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.12.0"
   win32:
     dependency: transitive
     description:

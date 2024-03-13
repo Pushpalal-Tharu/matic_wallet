@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matic_wallet/main.dart';
 import 'package:matic_wallet/pages/home/home_page.dart';
 import 'package:matic_wallet/services/wallet_service.dart';
 
@@ -105,6 +106,6 @@ class _ImportWalletState extends State<ImportWallet> {
   }
 
   void navigateToWalletPage() {
-    Get.to(const HomePage());
+    Get.to(const MainPage());
   }
 }

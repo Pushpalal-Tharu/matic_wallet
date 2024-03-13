@@ -1,3 +1,4 @@
+import 'package:matic_wallet/main.dart';
 import 'package:matic_wallet/pages/home/home_page.dart';
 import 'package:matic_wallet/services/wallet_service.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _MnemonicVerificationPageState extends State<MnemonicVerificationPage> {
 
   void navigateToWalletPage() async {
     await WalletService.addWallet(verificationText);
-    Get.to(() => const HomePage());
+    Get.to(() => const MainPage());
   }
 
   @override

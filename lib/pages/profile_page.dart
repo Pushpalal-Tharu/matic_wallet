@@ -16,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
     Color(0xFF3498DB),
   ];
 
-  final _containerHeight = 400.0;
+  final _containerHeight = 200.0;
 
   final ScrollController _scrollController = ScrollController();
 
