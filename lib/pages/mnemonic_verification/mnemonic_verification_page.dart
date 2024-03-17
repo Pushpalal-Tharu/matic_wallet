@@ -1,5 +1,4 @@
 import 'package:matic_wallet/main.dart';
-import 'package:matic_wallet/pages/home/home_page.dart';
 import 'package:matic_wallet/services/wallet_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

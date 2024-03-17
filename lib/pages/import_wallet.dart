@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:matic_wallet/main.dart';
-import 'package:matic_wallet/pages/home/home_page.dart';
+import 'package:bip39/bip39.dart' as bip39;
 import 'package:matic_wallet/services/wallet_service.dart';
 
 class ImportWallet extends StatefulWidget {
@@ -11,14 +14,18 @@ class ImportWallet extends StatefulWidget {
 }
 
 class _ImportWalletState extends State<ImportWallet> {
-  String mnemonic = '';
-  late List<String> seedPhrase;
+  // String mnemonic = '';
+  // late List<String> seedPhrase;
+
+  final _formKey = GlobalKey<FormState>();
+  final _words = List<String>.filled(12, '');
+  bool validationFailed = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Import from Seed'),
+        title: const Text('Import from seed'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -26,29 +33,62 @@ class _ImportWalletState extends State<ImportWallet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    'Please Enter your mnemonic phrase:',
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-                  const SizedBox(height: 24.0),
-                  TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        mnemonic = value.trim();
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Enter mnemonic phrase',
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    const Text('Please enter your recovery phrase',
+                        style: TextStyle(fontSize: 18)),
+                    const SizedBox(height: 24.0),
+                    SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Form(
+                        key: _formKey,
+                        child: GridView.count(
+                          padding: const EdgeInsets.all(3),
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 3,
+                          shrinkWrap: true,
+                          crossAxisCount: 3,
+                          children: List.generate(12, (index) {
+                            return SizedBox(
+                              height: 50,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  hintText: '${index + 1}',
+                                ),
+                                onSaved: (value) {
+                                  _words[index] = value!;
+                                },
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    Text(validationFailed ? 'Invalid keyphrase' : '',
+                        style: const TextStyle(color: Colors.red)),
+                    // TextField(
+                    //   onChanged: (value) {
+                    //     setState(() {
+                    //       mnemonic = value.trim();
+                    //     });
+                    //   },
+                    //   decoration: const InputDecoration(
+                    //     labelText: 'Enter mnemonic phrase',
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
             ElevatedButton(
               onPressed: () {
-                verifyMnemonic();
+                // verifyMnemonic();
+                _onSubmit(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(
@@ -64,46 +104,69 @@ class _ImportWalletState extends State<ImportWallet> {
     );
   }
 
-  void verifyMnemonic() async {
-    if (mnemonic == "") {
-      Get.snackbar(
-        "No mnemonic phrase",
-        "Please enter the mnemonic phrase.",
-        snackPosition: SnackPosition.TOP,
-      );
-    } else {
-      mnemonic = removeMultipleSpaces(mnemonic);
-      seedPhrase = mnemonic.split(' ');
-      if (seedPhrase.length == 12) {
-        await WalletService.addWallet(mnemonic);
+  void _onSubmit(context) async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      print("****");
+      print(_words);
+      print("****");
+      String wordsString = _words.join(' ');
+      print(wordsString);
+      print("****");
+      final t = bip39.validateMnemonic(wordsString);
+      if (t) {
+        const secureStorage = FlutterSecureStorage();
+        secureStorage.write(key: 'mnemonic', value: wordsString);
+        await WalletService.addWallet(wordsString);
         navigateToWalletPage();
-      } else if (seedPhrase.length < 12) {
-        Get.snackbar(
-          "Mnemonic phrase incomplete",
-          "Please enter the 12 words phrase.",
-          snackPosition: SnackPosition.TOP,
-        );
       } else {
-        Get.snackbar(
-          "Mnemonic phrase incomplete",
-          "Entered mnemonic phrase must not be greater than 12.",
-          snackPosition: SnackPosition.TOP,
-        );
+        setState(() {
+          validationFailed = true;
+        });
       }
     }
   }
 
-  // Define a function that removes multiple spaces from a string
-  String removeMultipleSpaces(String input) {
-    // Create a RegExp object with the pattern r"\s+"
-    RegExp whitespaceRE = RegExp(r"\s+");
+  // void verifyMnemonic() async {
+  //   if (mnemonic == "") {
+  //     Get.snackbar(
+  //       "No mnemonic phrase",
+  //       "Please enter the mnemonic phrase.",
+  //       snackPosition: SnackPosition.TOP,
+  //     );
+  //   } else {
+  //     mnemonic = removeMultipleSpaces(mnemonic);
+  //     seedPhrase = mnemonic.split(' ');
+  //     if (seedPhrase.length == 12) {
+  //       await WalletService.addWallet(mnemonic);
+  //       navigateToWalletPage();
+  //     } else if (seedPhrase.length < 12) {
+  //       Get.snackbar(
+  //         "Mnemonic phrase incomplete",
+  //         "Please enter the 12 words phrase.",
+  //         snackPosition: SnackPosition.TOP,
+  //       );
+  //     } else {
+  //       Get.snackbar(
+  //         "Mnemonic phrase incomplete",
+  //         "Entered mnemonic phrase must not be greater than 12.",
+  //         snackPosition: SnackPosition.TOP,
+  //       );
+  //     }
+  //   }
+  // }
 
-    // Replace all the white space characters with a single space
-    String output = input.replaceAll(whitespaceRE, " ");
+  // // Define a function that removes multiple spaces from a string
+  // String removeMultipleSpaces(String input) {
+  //   // Create a RegExp object with the pattern r"\s+"
+  //   RegExp whitespaceRE = RegExp(r"\s+");
 
-    // Return the resulting string
-    return output;
-  }
+  //   // Replace all the white space characters with a single space
+  //   String output = input.replaceAll(whitespaceRE, " ");
+
+  //   // Return the resulting string
+  //   return output;
+  // }
 
   void navigateToWalletPage() {
     Get.to(const MainPage());
