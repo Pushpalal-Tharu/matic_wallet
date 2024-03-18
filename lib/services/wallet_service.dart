@@ -4,21 +4,18 @@ import 'package:matic_wallet/data/repository/account_repository.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hex/hex.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class WalletService {
   static String generateMnemonic() {
     String mnemonic = bip39.generateMnemonic();
     GetStorage storage = GetStorage();
     storage.write("mnemonic", mnemonic);
-    const secureStorage = FlutterSecureStorage();
-    secureStorage.write(key: 'mnemonic', value: mnemonic);
     return mnemonic;
   }
 
   static Future<String> generatePrivateKey(String mnemonic) async {
-    const secureStorage = FlutterSecureStorage();
-    secureStorage.write(key: 'mnemonic', value: mnemonic);
+    GetStorage storage = GetStorage();
+    storage.write("mnemonic", mnemonic);
     final seed = bip39.mnemonicToSeed(mnemonic);
     final node = bip32.BIP32.fromSeed(seed);
     final child = node.derivePath("m/44'/60'/0'/0/0");

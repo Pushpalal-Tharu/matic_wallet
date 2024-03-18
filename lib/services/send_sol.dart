@@ -1,8 +1,8 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:solana/solana.dart' as solana;
 
 Future<String> send_sol(String address, double ammount) async {
-  final storage = FlutterSecureStorage();
+  GetStorage storage = GetStorage();
   String? rpcUrl;
   // final network = await storage.read(key: "network");
 
@@ -21,7 +21,7 @@ Future<String> send_sol(String address, double ammount) async {
     websocketUrl: Uri.parse(wsUrl),
   );
 
-  final mainWalletKey = await storage.read(key: 'mnemonic');
+  final mainWalletKey = await storage.read('mnemonic');
 
   final mainWalletSolana = await solana.Ed25519HDKeyPair.fromMnemonic(
     mainWalletKey!,

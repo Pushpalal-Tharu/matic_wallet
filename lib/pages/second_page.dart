@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:matic_wallet/services/send_sol.dart';
 import 'package:solana/solana.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/services.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class SecondPage extends StatefulWidget {
+  const SecondPage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<SecondPage> createState() => _SecondPageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _SecondPageState extends State<SecondPage> {
   String? _publicKey;
   String? _balance;
   SolanaClient? client;
-  final storage = const FlutterSecureStorage();
+  GetStorage storage = GetStorage();
+
   @override
   void initState() {
     super.initState();
@@ -28,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Solana"),
+        title: const Text("Solana Devnet"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -117,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void _readPk() async {
-    final mnemonic = await storage.read(key: 'mnemonic');
+    final mnemonic = await storage.read('mnemonic');
     if (mnemonic != null) {
       final keypair = await Ed25519HDKeyPair.fromMnemonic(mnemonic);
       setState(() {

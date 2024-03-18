@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:matic_wallet/main.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:matic_wallet/services/wallet_service.dart';
@@ -20,6 +18,8 @@ class _ImportWalletState extends State<ImportWallet> {
   final _formKey = GlobalKey<FormState>();
   final _words = List<String>.filled(12, '');
   bool validationFailed = false;
+
+  GetStorage secureStorage = GetStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -115,8 +115,7 @@ class _ImportWalletState extends State<ImportWallet> {
       print("****");
       final t = bip39.validateMnemonic(wordsString);
       if (t) {
-        const secureStorage = FlutterSecureStorage();
-        secureStorage.write(key: 'mnemonic', value: wordsString);
+        secureStorage.write('mnemonic', wordsString);
         await WalletService.addWallet(wordsString);
         navigateToWalletPage();
       } else {

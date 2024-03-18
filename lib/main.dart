@@ -1,12 +1,14 @@
 import 'package:matic_wallet/data/repository/account_repository.dart';
 import 'package:matic_wallet/model/wallet_model.dart';
+import 'package:matic_wallet/pages/last_page.dart';
 import 'package:matic_wallet/pages/home/home_page.dart';
 import 'package:matic_wallet/pages/login_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:matic_wallet/pages/profile_page.dart';
+import 'package:matic_wallet/pages/second_page.dart';
+import 'package:matic_wallet/pages/third_page.dart';
 
 Future<void> main() async {
   await GetStorage.init();
@@ -64,9 +66,9 @@ class _MainPageState extends State<MainPage> {
   int index = 0;
   final screens = [
     const HomePage(),
-    const ProfilePage(),
-    const ProfilePage(),
-    const ProfilePage(),
+    const SecondPage(),
+    const ThirdPage(),
+    const LastPage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -94,17 +96,17 @@ class _MainPageState extends State<MainPage> {
             NavigationDestination(
               icon: Icon(Icons.favorite_outline),
               selectedIcon: Icon(Icons.favorite),
-              label: 'Feed',
+              label: 'Second',
             ),
             NavigationDestination(
               icon: Icon(Icons.chat_bubble_outline),
               selectedIcon: Icon(Icons.chat_bubble),
-              label: 'Chat',
+              label: 'Third',
             ),
             NavigationDestination(
               icon: Icon(Icons.person_outline),
               selectedIcon: Icon(Icons.person),
-              label: 'Profile',
+              label: 'Last',
             )
           ],
         ),

@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   web3dart: ^2.7.2
   bip39: ^1.0.6
-  ed25519_hd_key: ^2.2.1
   hex: ^0.2.0
   get: ^4.6.6
   get_storage: ^2.1.1
@@ -45,8 +44,9 @@ dependencies:
   bip32: ^2.0.0
   path: ^1.8.3
   solana: ^0.30.3
-  flutter_secure_storage: ^9.0.0
   flutter_dotenv: ^5.1.0
+  bdk_flutter: ^0.30.0
+
 
 dev_dependencies:
   flutter_test:
